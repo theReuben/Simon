@@ -102,6 +102,9 @@ def click_no():
 	y = int(4 * 768/19.3)
 	click_at(x, y)
 
+def accept_drop():
+	click_at(637, 600)
+
 def turn_in():
 	# click quest
 	click_at(378, 300)
@@ -220,6 +223,7 @@ def legion_tokens():
 			click_screen()
 			vampire_lord()
 			end = time.time()
+		return_screen()
 		move_screen()
 		print("Turning in at {0}.".format(dt.now()))
 		for i in range(5):
@@ -250,18 +254,22 @@ def help():
 				"loo" : "lord of order",
 				"lt" : "legion tokens (fotia)", 
 				"lc" : "lightcaster", 
-				"orb" : "turn_in_necropolis",
-				"seraphic" : "seraphic_turn_in",
+				"orb" : "turn in necropolis",
+				"sera" : "seraphic turn in",
 				"vl" : "vampire lord"
 			}
 	print("Acceptable options:")
 	for k,v in funcs.items():
 		print("-{0}	:	{1}".format(k,v))
+	print("If you would like to accept drops, add '-a'.")
 
 if __name__ == '__main__':
 	func = False
 	args = len(argv) - 1
 	var = argv[1][1::]
+	accept = False
+	if args == 2 and argv[2][1::] == "a":
+		accept = True
 
 	keyboard = Keyboard()
 	mouse = Mouse()
@@ -281,14 +289,14 @@ if __name__ == '__main__':
 		func = lightcaster
 	elif var == "orb":
 		func = turn_in_necropolis
-	elif var == "seraphic":
+	elif var == "sera":
 		func = seraphic_war
 	elif var == "vl":
 		func = vampire_lord
 	elif var == "test":
 		sleep(2)
 		# Put test code here
-		for _ in range(29):
+		while True:
 			turn_in_bone_dust()
 		print("Test complete.")
 	else:
@@ -297,10 +305,14 @@ if __name__ == '__main__':
 
 	if func != False:
 		print("Running from: {0}".format(dt.now()))
+		if accept:
+			print("Accepting drops.")
 		print("Running {0}.".format(func))
 		while True:
 			try:
-				func()				
+				func()
+				if accept:
+					accept_drop()
 			except KeyboardInterrupt as e:
 				print("\nSimon ended.")
 				break
