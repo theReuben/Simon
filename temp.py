@@ -29,15 +29,20 @@ def vampire_lord():
 			tap(k)
 			sleep(v)
 
+def vampire_lord_alt():
+	keys = ["2", "3", "4"]
+	for k in keys:
+		tap(k)
+		sleep(1)
+
 def lightcaster():
 	keys = ["2", "3", "4", "5"]
-	while True:
-		for k in keys:
-			sleep(0.5)
-			tap(k)
-			if k == "4":
-				close_target()
-				tap("1")
+	for k in keys:
+		sleep(1)
+		tap(k)
+		if k == "4":
+			close_target()
+			tap("1")
 
 def archpaladin():
 	def nought():
@@ -58,15 +63,29 @@ def archpaladin():
 	sleep(5)
 	tap("5")
 
+def legion_revenant():
+	keys = ["1", "2", "3", "4", "5"]
+	for k in keys:
+		sleep(1.2)
+		tap(k)
+		if k == "4":
+			close_target()
+			tap("1")
+
+def legion_revenant_alt():
+	keys = ["2", "3", "5"]
+	for k in keys:
+		sleep(1.2)
+		tap(k)
+
 def darkside():
 	keys = ["2", "3", "4", "5"]
-	while True:
-		for k in keys:
-			sleep(2)
-			tap(k)
-			if k == "2" or k == "5":
-				close_target()
-				tap("1")
+	for k in keys:
+		sleep(2)
+		tap(k)
+		if k == "2" or k == "5":
+			close_target()
+			tap("1")
 
 def lord_of_order():
 	keys = ["3", "2", "4", "5"]
@@ -80,6 +99,7 @@ def lord_of_order():
 def doom_kitten():
 	while True:
 		tap("3")
+		sleep(2)
 
 def click_at(x, y, cm=False):
 	if cm:
@@ -99,15 +119,20 @@ def click_screen():
 
 def click_no():
 	x = int(19 * 1366/34.3)
-	y = int(4 * 768/19.3)
+	y = int(4.1 * 768/19.3)
 	click_at(x, y)
 
 def accept_drop():
 	click_at(637, 600)
+	sleep(1)
+	click_at(13, 16, cm=True)
+
+def accept_drop2() :
+	click_at(15, 12.5, cm=True)
 
 def turn_in():
 	# click quest
-	click_at(378, 300)
+	click_at(278, 300)
 	sleep(1.5)
 	# click turn in
 	click_at(378, 561)
@@ -193,11 +218,17 @@ def move_screen():
 	click_at(x, y)
 	sleep(2)
 	click_at(5, 8, cm=True)
-	sleep(3)
+	sleep(6)
 	click_at(17, 13, cm=True)
+
+def move_screen2() :
+	click_at(28, 12, cm=True)
 
 def return_screen():
 	click_at(17, 15.2, cm=True)
+
+def return_screen2() :
+	click_at(5, 12, cm=True)
 
 def endless_bridge():
 	x = int(29 * 1366/34.3)
@@ -213,20 +244,20 @@ def fishing():
 
 def legion_tokens():
 	sleep(3)
-	iter = 0
 	start = time.time()
 	end = time.time()
 	while True:
 		start = time.time()
 		while end-start < 200:
-			click_no()
+			# click_no()
 			click_screen()
-			vampire_lord()
+			legion_revenant_alt()
 			end = time.time()
 		return_screen()
+		accept_drop()
 		move_screen()
 		print("Turning in at {0}.".format(dt.now()))
-		for i in range(5):
+		for i in range(3):
 			turn_in()
 		sleep(3)
 		return_screen()
@@ -237,26 +268,77 @@ def seraphic_war():
 	end = time.time()
 	while True:
 		start = time.time()
-		while end-start < 200:
+		while end-start < 180:
 			click_no()
 			vampire_lord()
 			end = time.time()
+		sleep(5)
 		print("Turning in at {0}.".format(dt.now()))
 		for i in range(5):
 			seraphic_turn_in()
 		sleep(3)
 
+def merge():
+	x = int(0.5 * 1366)
+	y = int(0.75 * 768)
+	click_at(x, y)
+	sleep(1)
+
+def turn_in_number(x) :
+	# click quest
+	click_at(378, 260+(x*16))
+	sleep(1.5)
+	# click turn in
+	click_at(378, 561)
+	sleep(1.5)
+	# accept tokens
+	click_at(637, 517)
+	sleep(1.5)
+	# click quest
+	click_at(378, 260+(x*16))
+	sleep(1.5)
+	# accept quest
+	click_at(319, 561)
+	sleep(1.5)
+
+def tainted_gem() :
+	while True:
+		turn_in_number(7)
+
+def nulgath_emblem() :
+	sleep(3)
+	start = time.time()
+	end = time.time()
+	while True:
+		start = time.time()
+		while end-start < 150:
+			# click_no()
+			click_screen()
+			legion_revenant()
+			accept_drop()
+			accept_drop2()
+			end = time.time()
+		move_screen2()
+		sleep(4)
+		print("Turning in at {0}.".format(dt.now()))
+		turn_in_number(5)
+		sleep(3)
+		return_screen2()
+
 def help():
 	funcs = {
+				"buy" : "merge items",
 				"d" : "darkside", 
 				"h" : "help",
 				"ldk" : "legion doomknight", 
 				"loo" : "lord of order",
+				"lr" : "legion revenant",
 				"lt" : "legion tokens (fotia)", 
 				"lc" : "lightcaster", 
 				"orb" : "turn in necropolis",
 				"sera" : "seraphic turn in",
-				"vl" : "vampire lord"
+				"vl" : "vampire lord",
+				"vla" : "vampire lord (without 'aspect of the bat'"
 			}
 	print("Acceptable options:")
 	for k,v in funcs.items():
@@ -275,7 +357,9 @@ if __name__ == '__main__':
 	mouse = Mouse()
 	button = Button.left
 
-	if var == "d":
+	if var == "buy":
+		func = merge
+	elif var == "d":
 		func = darkside
 	elif var == "h":
 		help()
@@ -283,6 +367,10 @@ if __name__ == '__main__':
 		func = legion_doom_knight
 	elif var == "loo":
 		func = lord_of_order
+	elif var == "lr":
+		func = legion_revenant
+	elif var == "lra":
+		func = legion_revenant_alt
 	elif var == "lt":
 		func = legion_tokens
 	elif var == "lc":
@@ -293,11 +381,17 @@ if __name__ == '__main__':
 		func = seraphic_war
 	elif var == "vl":
 		func = vampire_lord
+	elif var == "vla":
+		func = vampire_lord_alt
+	elif var == "nem" :
+		func = nulgath_emblem
+        elif var == "tg" :
+            func = tainted_gem
 	elif var == "test":
 		sleep(2)
 		# Put test code here
-		while True:
-			turn_in_bone_dust()
+		accept_drop()
+		# click_at(13, 16, cm=True)
 		print("Test complete.")
 	else:
 		print("var passed does not match options")
@@ -314,5 +408,5 @@ if __name__ == '__main__':
 				if accept:
 					accept_drop()
 			except KeyboardInterrupt as e:
-				print("\nSimon ended.")
+				print("\nSimon ended at {0}".format(dt.now()))
 				break
