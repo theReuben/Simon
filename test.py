@@ -1,4 +1,4 @@
-from simon import Attack_Pattern
+from attack_pattern import AttackPattern
 from time import sleep
 
 if __name__ == '__main__':
@@ -10,5 +10,5 @@ if __name__ == '__main__':
 				(5,1.5)
 				]
 
-	lr = Attack_Pattern(pattern)
+	lr = AttackPattern(pattern)
 	lr.attack()

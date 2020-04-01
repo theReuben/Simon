@@ -1,10 +1,13 @@
 from dotpyo import click_at, tap
 from time import sleep
 
-class Attack_Pattern():
+class AttackPattern():
 	"""
-	Takes a pattern dict() of the form {(str) k: (int) v} where k is the key,
-	and v is the time to wait after pressing in seconds.
+	Takes a list argument, where each element is (int:key, int:wait).
+	int:key is the key to be pressed next in the sequence
+	int:wait is the time to wait between keys
+	For skills that are applied to self, follow with (0, 0), to close the
+	target.
 	"""
 	pattern = []
 
