@@ -1,4 +1,5 @@
 from dotpyo import click_at, tap
+
 from time import sleep
 
 class AttackPattern():
@@ -16,7 +17,6 @@ class AttackPattern():
 
 	def attack(self):
 		for p in self.pattern:
-			print(p[0], p[1])
 			tap(str(p[0]))
 			if (p[0] == 0):
 				self.close_target()

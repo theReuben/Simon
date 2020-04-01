@@ -280,7 +280,7 @@ def seraphic_war():
 
 def merge():
 	x = int(0.5 * 1366)
-	y = y = int(0.75 * 768)
+	y = int(0.75 * 768)
 	click_at(x, y)
 	sleep(1)
 

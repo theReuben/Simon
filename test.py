@@ -1,4 +1,5 @@
-from attack_pattern import AttackPattern
+from libs.attack_pattern import AttackPattern
+
 from time import sleep
 
 if __name__ == '__main__':
