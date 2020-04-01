@@ -11,15 +11,14 @@ def new_lr():
 
 if __name__ == '__main__':
 	lr = new_lr()
+
 	accept = False
 	func = False
-	num = 0
-	args = len(argv) - 1
-	var = argv[1][1::]
-	if args >= 2 and argv[2][1::] == "a":
+	args = len(argv)
+	if args == 2 and argv[1] == "-a":
 		accept = True
 
-	if args == 1:
+	if args >= 1:
 		func = lr
 
 	if func != False:
